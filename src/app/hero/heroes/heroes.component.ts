@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ColDef } from 'ag-grid-community';
 
 import { HeroService } from '../hero.service';
 import { Hero } from '../model/hero';
-
-
-
+import { columnDefsArray } from '../model/columnDefs'
 
 @Component({
   selector: 'app-heroes',
@@ -22,7 +20,6 @@ export class HeroesComponent implements OnInit {
   constructor(public heroes: HeroService) {}
 
   ngOnInit(): void {
-
     this.heroes.getJSON().subscribe((data) => {
       const info = data.data
       this.type = data.type;
@@ -34,22 +31,12 @@ export class HeroesComponent implements OnInit {
           info[item].key,
           info[item].name)
         this.arrHeroes.push(hero);
-
       }
-      this.rowData = this.getHeroes(this.arrHeroes)
+      this.rowData = this.heroes.getHeroes(this.arrHeroes);
     })
   }
 
-  columnDefs: ColDef[] = [
-        { field: 'id' , sortable: true, filter: true },
-        { field: 'name' , sortable: true, filter: true },
-        { field: 'title', sortable: true, filter: true },
-        { field: 'key', sortable: true, filter: true }
-    ];
-
- rowData: Observable<any[]> | undefined;
-
-
- getHeroes(arrHeroes: any) { return of(arrHeroes); }
+  columnDefs: ColDef[] = columnDefsArray();
+  rowData: Observable<any[]> | undefined;
 
 }
