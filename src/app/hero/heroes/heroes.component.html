@@ -1,6 +1,15 @@
 <h1>App of {{ type }} v_{{ versions }}</h1>
-<div class="heroes">
+
+<!-- <div class="heroes">
   <div *ngFor="let hero of arrHeroes">
     <app-hero [hero]="hero"></app-hero>
   </div>
-</div>
+</div> -->
+
+<ag-grid-angular
+  style="width: 500px; height: 500px"
+  class="ag-theme-alpine"
+  [rowData]="rowData | async"
+  [columnDefs]="columnDefs"
+>
+</ag-grid-angular>
